@@ -33,6 +33,7 @@ public class EventTimeTrigger extends Trigger<Object, TimeWindow> {
 
 	private EventTimeTrigger() {}
 
+	// if timestamp > watermark
 	@Override
 	public TriggerResult onElement(Object element, long timestamp, TimeWindow window, TriggerContext ctx) throws Exception {
 		if (window.maxTimestamp() <= ctx.getCurrentWatermark()) {

@@ -32,6 +32,13 @@ under the License.
 	<name>flink-examples-batch</name>
 	<packaging>jar</packaging>
 
+	<repositories>
+		<repository>
+			<id>confluent</id>
+			<url>http://packages.confluent.io/maven/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.flink</groupId>

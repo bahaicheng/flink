@@ -135,6 +135,7 @@ public class TopSpeedWindowing {
 					distances[carId] += speeds[carId] / 3.6d;
 					Tuple4<Integer, Integer, Double, Long> record = new Tuple4<>(carId,
 							speeds[carId], distances[carId], System.currentTimeMillis());
+					System.out.println(String.format("record : %s",record));
 					ctx.collect(record);
 				}
 			}

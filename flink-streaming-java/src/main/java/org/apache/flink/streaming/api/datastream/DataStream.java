@@ -898,7 +898,7 @@ public class DataStream<T> {
 
 	/**
 	 * Assigns timestamps to the elements in the data stream and creates watermarks to
-	 * signal event time progress based on the elements themselves.
+	 * signal event time progress based on the elements themselves.x
 	 *
 	 * <p>This method creates watermarks based purely on stream elements. For each element
 	 * that is handled via {@link AssignerWithPunctuatedWatermarks#extractTimestamp(Object, long)},

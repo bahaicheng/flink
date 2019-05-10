@@ -44,6 +44,7 @@ public class ProcessingTimeTrigger extends Trigger<Object, TimeWindow> {
 
 	@Override
 	public TriggerResult onProcessingTime(long time, TimeWindow window, TriggerContext ctx) {
+		assert time == window.maxTimestamp();
 		return TriggerResult.FIRE;
 	}
 

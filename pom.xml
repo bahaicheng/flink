@@ -138,7 +138,20 @@ under the License.
 		<generated.docs.dir>./docs/_includes/generated</generated.docs.dir>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>confluent</id>
+			<url>http://packages.confluent.io/maven/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
+
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-avro-serializer</artifactId>
+			<version>4.1.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.flink</groupId>

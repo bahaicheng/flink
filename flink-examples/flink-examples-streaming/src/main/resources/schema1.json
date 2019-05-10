@@ -1,0 +1,24 @@
+{
+  "subject": "dev3-yangyunhe-topic001-value",
+  "version": 1,
+  "id": 41,
+  "schema": {
+    "type": "record",
+    "name": "User",
+    "fields": [
+      {
+        "name": "id",
+        "type": "int"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "age",
+        "type": "int"
+      }
+    ]
+  },
+  "deleted": false
+}
