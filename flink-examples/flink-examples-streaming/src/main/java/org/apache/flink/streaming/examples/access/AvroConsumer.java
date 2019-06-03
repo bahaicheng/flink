@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class AvroConsumer {
+	private static Logger logger = LoggerFactory.getLogger(AvroConsumer.class);
 
 	private static final String SCHEMA = "{\"type\": \"record\", \"name\": \"User\", \"fields\": [{\"name\": \"id\", \"type\": \"int\"}, {\"name\": \"name\", \"type\": \"string\"}, {\"name\": \"age\", \"type\": \"int\"}]}";
 
@@ -24,15 +25,15 @@ public class AvroConsumer {
 		"\"fields\": [{\"name\": \"id\", \"type\": \"int\"}, " +
 		"{\"name\": \"name\",  \"type\": \"string\"}]}";
 
-    public static void main(String[] args) throws Exception{
-		Logger logger = LoggerFactory.getLogger(AvroConsumer.class);
-		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", "localhost:9092");
-        properties.setProperty("group.id", "test");
-        FlinkKafkaConsumer010<RtEvent> consumer11 = new FlinkKafkaConsumer010<>("dev3-yangyunhe-topic001", new KafkaMessageDeserializationSchema() , properties);
+	public static void main(String[] args) throws Exception{
 
-        DataStream<RtEvent> source = env.addSource(consumer11);
+		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+		Properties properties = new Properties();
+		properties.setProperty("bootstrap.servers", "localhost:9092");
+		properties.setProperty("group.id", "test");
+		FlinkKafkaConsumer010<RtEvent> consumer11 = new FlinkKafkaConsumer010<>("dev3-yangyunhe-topic001", new KafkaMessageDeserializationSchema() , properties);
+
+		DataStream<RtEvent> source = env.addSource(consumer11);
 
 		DataStream<String> map = source.map(new MapFunction<RtEvent, String>() {
 			@Override

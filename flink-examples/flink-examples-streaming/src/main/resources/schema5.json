@@ -1,0 +1,26 @@
+{
+  "before": null,
+  "resource": null,
+  "after": {
+    "id": 3401,
+    "user_id": 1,
+    "name": "kafka connect",
+    "description": "description_value",
+    "stream_info": "stream_info_value",
+    "client_info": "client_info_value",
+    "thumbnail_info": "thumbnail_info_value",
+    "gmt_create": 1556633639000,
+    "gmt_modified": 1556638782000,
+    "is_deleted": false,
+    "nested": {
+      "K1": "V1",
+      "K2": "V2"
+    },
+    "arr": [
+      "ARR1",
+      "ARR2"
+    ]
+  },
+  "op": "u",
+  "ts_ms": 1556609982467
+}

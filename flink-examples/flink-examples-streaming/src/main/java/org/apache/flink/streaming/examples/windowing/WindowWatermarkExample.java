@@ -16,13 +16,14 @@ import org.apache.flink.util.Collector;
 
 import javax.annotation.Nullable;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 public class WindowWatermarkExample {
 
 	public static void main(String[] args) throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-		env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+		env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
 		env.getConfig().setAutoWatermarkInterval(100);
 
 		DataStream<Tuple2<String, Long>> sourceInput = env.addSource(CreateData.creat());
@@ -40,7 +41,11 @@ public class WindowWatermarkExample {
 					long end = window.getEnd();
 					long max = window.maxTimestamp();
 					String data = input.toString();
-					out.collect(new Tuple2<>("Data : " + data, "  WindowStart: " + start + " WindowEnd: " + end + " WindowMaxTimestamp: " + max));
+					Date sdate = new Date(start);
+					String startime = sdf.format(sdate);
+					Date edate = new Date(end);
+					String endtime = sdf.format(edate);
+					out.collect(new Tuple2<>("Data : " + data, "  WindowStart: " + startime + " WindowEnd: " + endtime + " WindowMaxTimestamp: " + max));
 				}
 			});
 
@@ -71,7 +76,12 @@ public class WindowWatermarkExample {
 		@Override
 		public long extractTimestamp(Tuple2<String, Long> element, long previousElementTimestamp) {
 			currentMaxTimestamp = Math.max(element.f1, currentMaxTimestamp);
-			System.out.println("WindowWatermarkTest => element : " + element + " currentTime : " + System.currentTimeMillis() + "  currentMaxTimestamp : " + currentMaxTimestamp + "  watermark : " + watermark);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+			Date date = new Date(element.f1);
+			String format = sdf.format(date);
+			long l = System.currentTimeMillis();
+			String format1 = sdf.format(new Date(l));
+			System.out.println("WindowWatermarkTest => Element Time : " + format + " currentTime : " + format1 + "  currentMaxTimestamp : " + currentMaxTimestamp + "  watermark : " + watermark);
 			return element.f1;
 		}
 
@@ -90,7 +100,10 @@ public class WindowWatermarkExample {
 			Random r = new Random();
 			int i = 0;
 			while (isRunning) {
-				Tuple2<String, Long> tuple = new Tuple2<String, Long>("000001",System.currentTimeMillis());
+				SimpleDateFormat sdf = new SimpleDateFormat();
+				long time = System.currentTimeMillis()-86400000;
+				String format = sdf.format(new Date(time));
+				Tuple2<String, Long> tuple = new Tuple2<String, Long>("000001",time);
 				Thread.sleep(1000);
 				ctx.collect(tuple);
 			}

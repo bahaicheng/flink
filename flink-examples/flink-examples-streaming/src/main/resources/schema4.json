@@ -1,0 +1,65 @@
+{
+  "@timestamp": "2019-05-08T06:00:57.675Z",
+  "@metadata": {
+    "beat": "filebeat",
+    "type": "doc",
+    "version": "6.5.1",
+    "topic": "sys-3-log-elk",
+    "pipeline": "filebeat-6.5.1-oracle-alertlog-pipeline"
+  },
+  "fileset": {
+    "name": "alertlog",
+    "module": "oracle"
+  },
+  "input": {
+    "type": "log"
+  },
+  "fields": {
+    "ip": "84.24.1.12"
+  },
+  "source": "/oracleser/app12201/oracle/diag/rdbms/fsup/FSUP/trace/alert_FSUP.log",
+  "offset": 10516,
+  "message": "2019-05-08T14:00:47.663175+08:00\nThread 1 advanced to log sequence 15070 (LGWR switch)\n  Current log# 6 seq# 15070 mem# 0: +DG_FSUP_LOG/redo_a/redo06_a.log\n  Current log# 6 seq# 15070 mem# 1: +DG_FSUP_LOG/redo_b/redo06_b.log\n2019-05-08T14:00:47.716986+08:00\nArchived Log entry 24373 added for T-1.S-15069 ID 0x82c82bca LAD:1\n2019-05-08T14:00:47.888715+08:00\nTT03: Standby redo logfile selected for thread 1 sequence 15070 for destination LOG_ARCHIVE_DEST_2",
+  "host": {
+    "name": "pdccseftpdbs001",
+    "ip": [
+      "6.6.6.6"
+    ],
+    "mac": [
+      "40:ee:dd:17:d3:62",
+      "40:ee:dd:17:d3:63",
+      "40:ee:dd:17:d3:64",
+      "40:ee:dd:17:d3:65",
+      "9c:71:3a:f4:82:37",
+      "9c:71:3a:f4:82:38",
+      "9c:71:3a:f4:82:39",
+      "9c:71:3a:f4:82:3a",
+      "9c:71:3a:f4:82:37",
+      "9c:71:3a:f4:82:24",
+      "9c:71:3a:f4:82:25",
+      "9c:71:3a:f4:82:26",
+      "9c:71:3a:f4:82:37"
+    ],
+    "architecture": "x86_64",
+    "os": {
+      "version": "12-SP3",
+      "family": "suse",
+      "platform": "sles"
+    },
+    "id": "bcd2850114f7aea74c2a098c5a982ae2",
+    "containerized": false
+  },
+  "log": {
+    "flags": [
+      "multiline"
+    ]
+  },
+  "prospector": {
+    "type": "log"
+  },
+  "beat": {
+    "version": "6.5.1",
+    "name": "84.24.1.12",
+    "hostname": "pdccseftpdbs001"
+  }
+}
