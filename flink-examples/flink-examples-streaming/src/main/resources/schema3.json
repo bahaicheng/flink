@@ -1,7 +1,6 @@
 {
   "type": "record",
   "name": "User",
-  "fields": [
-    "6.6.6.6"
-  ]
+  "fields": {
+  }
 }
