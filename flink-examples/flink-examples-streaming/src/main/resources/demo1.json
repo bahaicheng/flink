@@ -1,0 +1,207 @@
+{
+  "version":2,
+  "appId":null,
+  "jobId":null,
+  "name":null,
+  "desc":null,
+  "parallelism":1,
+  "envConfig":null,
+  "timeCharact":"PROCESSING_TIME",
+  "maxSystemWindowSize":3600000,
+  "systemWindowSize":60000,
+  "watermarkInterval":100,
+  "enableRocksDBState":false,
+  "enableIncrementalCheckpointing":false,
+  "rocksDBStateSavePath":"file:///tmp/streamtau/rocksDBStateBackend",
+  "checkPointCfg":{
+    "enableCheckpoint":false,
+    "interval":30000,
+    "timeout":0,
+    "threadCnt":0,
+    "pauseInterval":0,
+    "ckMode":null,
+    "externalCkMode":null,
+    "storeConfig":{
+      "connection":"",
+      "username":"",
+      "password":"",
+      "path":""
+    }
+  },
+  "restartStrategyCfg":{
+    "restartStrategy":null,
+    "restartAttempts":0,
+    "delayInterval":0,
+    "delayIntervalTimeUnit":null,
+    "failureInterval":0,
+    "failureIntervalTimeUnit":null
+  },
+  "topology":{
+    "sources":[
+      {
+        "id":"bb9615e9-5f6e-477d-9bc5-c409c649ea9e",
+        "fid":"prelude.kafka-source",
+        "name":"Kafka Source",
+        "desc":"Consumption data from the specified Kafka Topic.",
+        "parallelism":1,
+        "dependencies":[
+
+        ],
+        "outputSchema":{
+          "name":"InSchema",
+          "columns":[
+
+          ]
+        },
+        "arguments":{
+          "topics":[
+            "topic_storageofignite_in_001"
+          ],
+          "bootstrap.servers":[
+            "172.20.3.40:9092"
+          ],
+          "group.id":"ignite_params_test1",
+          "auto.offset.reset":"latest"
+        }
+      }
+    ],
+    "operators":[
+      {
+        "id":"f9b2ee15-42ac-4af1-a97d-cca275b5edcc",
+        "fid":"prelude.ignite-operation",
+        "name":"StorageOfIgnite",
+        "desc":"create/write data to ignite, auto generate pojo",
+        "parallelism":1,
+        "dependencies":[
+          {
+            "predecessor":"d7b7756c-f30f-43fc-9590-c25a4703ebe9",
+            "selection":null
+          }
+        ],
+        "outputSchema":{
+          "name":"InSchema",
+          "columns":[
+
+          ]
+        },
+        "arguments":{
+          "dataRegionName":"Default_Region",
+          "cacheName":"CacheTest",
+          "supportSqlQuery":true,
+          "storageAndQuerySchema":{
+            "name":"schemaInfo",
+            "columns":[
+              {
+                "name":"id",
+                "key":true,
+                "type":"java.lang.String",
+                "indexable":true
+              },
+              {
+                "name":"name",
+                "type":"java.lang.String",
+                "indexable":true,
+                "nullable":true
+              },
+              {
+                "name":"city_id",
+                "nullable":false,
+                "type":"java.lang.String",
+                "key":true,
+                "defaultValue":"3",
+                "indexable":false
+              }
+            ]
+          },
+          "cacheMode":"PARTITIONED",
+          "writeSynchronizationMode":"PRIMARY_SYNC",
+          "atomicityMode":"TRANSACTIONAL",
+          "backups":1,
+          "expiryPolicy":{
+
+          }
+        }
+      },
+      {
+        "id":"d7b7756c-f30f-43fc-9590-c25a4703ebe9",
+        "fid":"prelude.source-format",
+        "name":"Source Conversion",
+        "desc":"Convert payload of type String, byte[], Map or others to RtEvent",
+        "parallelism":1,
+        "dependencies":[
+          {
+            "predecessor":"bb9615e9-5f6e-477d-9bc5-c409c649ea9e",
+            "selection":null
+          }
+        ],
+        "outputSchema":{
+          "name":"InSchema",
+          "columns":[
+
+          ]
+        },
+        "arguments":{
+          "format":"JSON",
+          "csvSeparator":",",
+          "mapping":{
+
+          },
+          "encoding":"UTF-8"
+        }
+      },
+      {
+        "id":"93a22d84-0dec-4664-ac2f-cc92f7978cac",
+        "fid":"prelude.sink-format",
+        "name":"Sink Format",
+        "desc":"Format RtEvent to customized data format and store it in payload",
+        "parallelism":1,
+        "dependencies":[
+          {
+            "predecessor":"f9b2ee15-42ac-4af1-a97d-cca275b5edcc",
+            "selection":null
+          }
+        ],
+        "outputSchema":null,
+        "arguments":{
+          "format":"JSON",
+          "csvSeparator":",",
+          "mapping":{
+
+          },
+          "encoding":"UTF-8"
+        }
+      }
+    ],
+    "sinks":[
+      {
+        "id":"4ad6e17d-54b5-4aa5-87cd-d7378ce5c4bc",
+        "fid":"prelude.kafka-sink",
+        "name":"Kafka Sink",
+        "desc":"write records to kafka topic",
+        "parallelism":1,
+        "dependencies":[
+          {
+            "predecessor":"93a22d84-0dec-4664-ac2f-cc92f7978cac",
+            "selection":null
+          }
+        ],
+        "outputSchema":{
+          "name":"InSchema",
+          "columns":[
+
+          ]
+        },
+        "arguments":{
+          "topic":"topic_storageofignite_out_001",
+          "bootstrap.servers":[
+            "172.20.3.40:9092"
+          ],
+          "acks":"1",
+          "retries":0,
+          "producerPoolSize":5,
+          "partitionMode":"fixed"
+        }
+      }
+    ]
+  }
+}

@@ -13,8 +13,12 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.triggers.EventTimeTrigger;
 
 import javax.annotation.Nullable;
+
 import java.util.Random;
 
+/**
+ * demo.
+ */
 public class WindowWatermarkTest {
 	public static void main(String[] args) throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -46,7 +50,6 @@ public class WindowWatermarkTest {
 
 		private Watermark watermark = null;
 
-
 		public static GenerateWatermark create() {
 			return new GenerateWatermark();
 		}
@@ -65,7 +68,6 @@ public class WindowWatermarkTest {
 			return element.f2;
 		}
 	}
-
 
 	private static class CreateData implements SourceFunction<Tuple3<Integer, Integer, Long>> {
 

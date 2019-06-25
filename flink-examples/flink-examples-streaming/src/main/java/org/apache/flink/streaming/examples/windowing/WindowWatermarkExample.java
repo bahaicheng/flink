@@ -15,10 +15,15 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import javax.annotation.Nullable;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+
+/**
+ * window demo.
+ */
 public class WindowWatermarkExample {
 
 	public static void main(String[] args) throws Exception {
@@ -32,7 +37,7 @@ public class WindowWatermarkExample {
 
 		DataStream<Tuple2<String, String>> window = watermark
 			.keyBy(0)
-			.window(SlidingEventTimeWindows.of(Time.seconds(4),Time.seconds(2)))
+			.window(SlidingEventTimeWindows.of(Time.seconds(4), Time.seconds(2)))
 			.apply(new WindowFunction<Tuple2<String, Long>, Tuple2<String, String>, Tuple, TimeWindow>() {
 				@Override
 				public void apply(Tuple tuple, TimeWindow window, Iterable<Tuple2<String, Long>> input, Collector<Tuple2<String, String>> out) throws Exception {
@@ -101,9 +106,9 @@ public class WindowWatermarkExample {
 			int i = 0;
 			while (isRunning) {
 				SimpleDateFormat sdf = new SimpleDateFormat();
-				long time = System.currentTimeMillis()-86400000;
+				long time = System.currentTimeMillis() - 86400000;
 				String format = sdf.format(new Date(time));
-				Tuple2<String, Long> tuple = new Tuple2<String, Long>("000001",time);
+				Tuple2<String, Long> tuple = new Tuple2<String, Long>("000001", time);
 				Thread.sleep(1000);
 				ctx.collect(tuple);
 			}

@@ -3,16 +3,6 @@
   "type": "record",
   "name": "avroTest",
   "fields": [
-    {
-      "name": "id",
-      "type": "string"
-    },
-    {
-      "name": "after",
-      "type": {
-        "name": "info",
-        "type": "string"
-      }
-    }
+    "1111"
   ]
 }

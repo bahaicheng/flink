@@ -17,26 +17,30 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import javax.annotation.Nullable;
+
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.Random;
 
+/**
+ * demo.
+ */
 public class NoneCharacteristic {
 
 	public static void main(String[] args) throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		env.getCheckpointConfig().isCheckpointingEnabled();
 		env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
-		DataStream<Tuple3<String, Integer,Long>> sourceInput = env.addSource(CreateData.creat());
+		DataStream<Tuple3<String, Integer, Long>> sourceInput = env.addSource(CreateData.creat());
 
 //		DataStream<Tuple2<String, Long>> watermark = sourceInput.assignTimestampsAndWatermarks(GenerateWatermark.create());
 
 		DataStream<Tuple2<String, String>> window = sourceInput
 			.keyBy(0)
 			.window(TumblingEventTimeWindows.of(Time.seconds(3)))
-			.apply(new WindowFunction<Tuple3<String, Integer,Long>, Tuple2<String, String>, Tuple, TimeWindow>() {
+			.apply(new WindowFunction<Tuple3<String, Integer, Long>, Tuple2<String, String>, Tuple, TimeWindow>() {
 				@Override
-				public void apply(Tuple tuple, TimeWindow window, Iterable<Tuple3<String, Integer,Long>> input, Collector<Tuple2<String, String>> out) throws Exception {
+				public void apply(Tuple tuple, TimeWindow window, Iterable<Tuple3<String, Integer, Long>> input, Collector<Tuple2<String, String>> out) throws Exception {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 					long start = window.getStart();
 					long end = window.getEnd();
@@ -59,7 +63,6 @@ public class NoneCharacteristic {
 
 		private Watermark watermark = null;
 
-
 		public static GenerateWatermark create() {
 			return new GenerateWatermark();
 		}
@@ -80,7 +83,7 @@ public class NoneCharacteristic {
 
 	}
 
-	private static class CreateData implements SourceFunction<Tuple3<String, Integer,Long>> {
+	private static class CreateData implements SourceFunction<Tuple3<String, Integer, Long>> {
 
 		private volatile boolean isRunning = true;
 

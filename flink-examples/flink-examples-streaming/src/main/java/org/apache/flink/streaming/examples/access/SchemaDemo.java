@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.avro.Schema;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.flink.shaded.netty4.io.netty.util.internal.ObjectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +29,9 @@ public class SchemaDemo {
 	private static final Logger logger = LoggerFactory.getLogger(SchemaDemo.class);
 
 	public static void main(String[] args) throws Exception {
-
+		System.out.println(60000/1000);
 	}
+
 
 	public static void testCacheModeType(){
 		CacheModeType type = null;
@@ -39,6 +42,7 @@ public class SchemaDemo {
 		URL resource = SchemaDemo.class.getClassLoader().getResource("test1.json");
 		byte[] bytes = Files.readAllBytes(Paths.get(resource.toURI()));
 		String json = new String(bytes);
+		System.out.println(json);
 		Map<String, Object> map = objectMapper.readValue(json, Map.class);
 		System.out.println(map);
 	}
